@@ -43,7 +43,7 @@ model Comment {
   author    User      @relation(fields: [authorId], references: [id])
 }
 
-model Category {
+model Workspace {
   id        String   @id @default(uuid())
   name      String
   createdAt DateTime @default(now())
@@ -68,12 +68,12 @@ model Task {
   comments    Comment[]
   tags        Tag[]
 
-  categoryId String
-  category   Category @relation(fields: [categoryId], references: [id])
-  userId     String
-  user       User     @relation(name: "TaskAuthor", fields: [userId], references: [id])
-  assigneeId String
-  assignee   User     @relation(name: "TaskAssignee", fields: [assigneeId], references: [id])
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  userId      String
+  user        User      @relation(name: "TaskAuthor", fields: [userId], references: [id])
+  assigneeId  String
+  assignee    User      @relation(name: "TaskAssignee", fields: [assigneeId], references: [id])
 }
 
 // Note: Run the following code to reset the database
