@@ -5,6 +5,7 @@ import Providers from "@/components/providers";
 import Navbar from "@/components/navbar";
 import Sidebar from "@/components/sidebar";
 import { cn } from "@/lib/utils";
+import { Card } from "@/components/ui/card";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,11 +22,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={cn(inter.className, "dark")}>
-        <Navbar />
-        <div className="flex mx-5 gap-5">
-          <Sidebar />
-          <Providers>{children}</Providers>
-        </div>
+        <Providers>
+          <Navbar />
+          <div className="flex mx-5 gap-5">
+            <Sidebar />
+            <Card className="w-full h-[calc(100vh-96px-20px)] p-5">
+              {children}
+            </Card>
+          </div>
+        </Providers>
       </body>
     </html>
   );

@@ -4,7 +4,8 @@ import MoreMenu from "./more-menu";
 const Navbar = () => {
   return (
     <div className="w-full h-24 flex items-center justify-between px-24">
-      <span className="text-2xl font-bold">TASKIE</span>
+      {/* <h1 className="text-3xl uppercase font-bold bg-gradient !bg-clip-text text-transparent !bg-cover !bg-center"> */}
+      <h1 className="text-3xl uppercase font-bold">Taskie</h1>
 
       <div className="flex items-center gap-2">
         <Avatar>

@@ -20,14 +20,15 @@ model User {
   companyId String
   company   Company @relation(fields: [companyId], references: [id])
 
-  id          String    @id @default(uuid())
-  email       String    @unique
+  id          String      @id @default(uuid())
+  email       String      @unique
   name        String
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  tasks       Task[]    @relation(name: "TaskAuthor")
-  assignments Task[]    @relation(name: "TaskAssignee")
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  tasks       Task[]      @relation(name: "TaskAuthor")
+  assignments Task[]      @relation(name: "TaskAssignee")
   comments    Comment[]
+  workspaces  Workspace[]
 }
 
 model Comment {
@@ -43,12 +44,23 @@ model Comment {
   author    User      @relation(fields: [authorId], references: [id])
 }
 
+model Category {
+  id          String    @id @default(uuid())
+  name        String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  tasks       Task[]
+  workspaceId String
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+}
+
 model Workspace {
-  id        String   @id @default(uuid())
-  name      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  tasks     Task[]
+  id         String     @id @default(uuid())
+  name       String
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  categories Category[]
+  users      User[]
 }
 
 model Tag {
@@ -68,12 +80,12 @@ model Task {
   comments    Comment[]
   tags        Tag[]
 
-  workspaceId String
-  workspace   Workspace @relation(fields: [workspaceId], references: [id])
-  userId      String
-  user        User      @relation(name: "TaskAuthor", fields: [userId], references: [id])
-  assigneeId  String
-  assignee    User      @relation(name: "TaskAssignee", fields: [assigneeId], references: [id])
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+  userId     String
+  user       User     @relation(name: "TaskAuthor", fields: [userId], references: [id])
+  assigneeId String
+  assignee   User     @relation(name: "TaskAssignee", fields: [assigneeId], references: [id])
 }
 
 // Note: Run the following code to reset the database
