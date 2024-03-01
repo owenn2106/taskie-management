@@ -7,7 +7,7 @@ const Navbar = () => {
       {/* <h1 className="text-3xl uppercase font-bold bg-gradient !bg-clip-text text-transparent !bg-cover !bg-center"> */}
       <h1 className="text-3xl uppercase font-bold">Taskie</h1>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-5">
         <Avatar>
           <AvatarImage src="https://avatars.githubusercontent.com/u/75826315?v=4" />
           <AvatarFallback>OG</AvatarFallback>

@@ -23,8 +23,8 @@ const MoreMenu = () => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="select-none rounded-xl ml-6 h-6 w-6 cursor-pointer flex items-center justify-center">
-        <MoreVertical className="h-4 w-4" />
+      <DropdownMenuTrigger className="select-none focus:outline-none w-10 h-10 flex items-center justify-center hover:bg-primary/15 rounded-sm cursor-pointer">
+        <MoreVertical className="h-6 w-6" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-64">
         <DropdownMenuLabel className="flex items-center justify-between">
