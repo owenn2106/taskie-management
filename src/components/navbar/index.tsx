@@ -4,8 +4,10 @@ import MoreMenu from "./more-menu";
 const Navbar = () => {
   return (
     <div className="w-full h-24 flex items-center justify-between px-24">
-      {/* <h1 className="text-3xl uppercase font-bold bg-gradient !bg-clip-text text-transparent !bg-cover !bg-center"> */}
-      <h1 className="text-3xl uppercase font-bold">Taskie</h1>
+      <h1 className="text-3xl uppercase font-bold bg-gradient-to-tl from-[#091e3a] via-[#2f80ed] to-[#2d9ee0] dark:from-[#2980b9] dark:to-[#2c3e50] !bg-clip-text text-transparent !bg-cover !bg-center">
+        {/* <h1 className="text-3xl uppercase font-bold"> */}
+        Taskie
+      </h1>
 
       <div className="flex items-center gap-5">
         <Avatar>
