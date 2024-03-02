@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Loader from "@/components/loader";
+import { Button } from "@/components/ui/button";
 
 const Content = () => {
   const { data: workspaces, isLoading: isWorkspacesLoading } = useQuery({
@@ -33,7 +34,7 @@ const Content = () => {
     (workspaces && !workspaces.length)
   ) {
     return (
-      <div className="text-muted text-sm text-center">
+      <div className="text-muted-foreground text-sm text-center">
         You do not have any workspaces yet
       </div>
     );
@@ -57,13 +58,17 @@ const Content = () => {
                 {workspace.categories?.length
                   ? workspace.categories.map((category: any) => {
                       return (
-                        <Link key={category.id} href="/">
-                          <div
+                        <Link
+                          key={category.id}
+                          href={`/workspaces/${category.id}`}
+                        >
+                          <Button
                             key={category.id}
-                            className="w-full hover:bg-primary/15 rounded-sm cursor-pointer p-3"
+                            variant="ghost"
+                            className="w-full justify-start cursor-pointer p-3 bg-transparent"
                           >
                             {category.name}
-                          </div>
+                          </Button>
                         </Link>
                       );
                     })

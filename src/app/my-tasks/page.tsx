@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button";
 import TasksList from "@/components/tasks/tasks-list";
 import AddTask from "@/components/tasks/add-task";
 
-const Tasks = () => {
+const MyTasks = () => {
   const { data: tasks, isLoading: isTasksLoading } = useQuery({
     queryKey: ["tasks"],
     queryFn: async () => {
@@ -18,17 +18,25 @@ const Tasks = () => {
     },
   });
 
-  if (isTasksLoading) {
-    return <Loader />;
-  }
+  const renderTasksList = () => {
+    if (isTasksLoading) {
+      return (
+        <div className="w-full h-96 flex items-center justify-center">
+          <Loader />
+        </div>
+      );
+    }
 
-  if ((!isTasksLoading && !tasks) || (tasks && !tasks.length)) {
-    return (
-      <div className="text-muted text-center">
-        You don&apos;t have any tasks yet.
-      </div>
-    );
-  }
+    if ((!isTasksLoading && !tasks) || (tasks && !tasks.length)) {
+      return (
+        <div className="text-muted-foreground w-full h-96 flex items-center justify-center">
+          You don&apos;t have any tasks yet.
+        </div>
+      );
+    } else {
+      return <TasksList tasks={tasks} />;
+    }
+  };
 
   return (
     <div>
@@ -51,9 +59,9 @@ const Tasks = () => {
 
       <AddTask />
 
-      <TasksList tasks={tasks} />
+      {renderTasksList()}
     </div>
   );
 };
 
-export default Tasks;
+export default MyTasks;

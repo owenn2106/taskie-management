@@ -1,4 +1,3 @@
-import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { MoreHorizontal } from "lucide-react";
 
@@ -17,7 +16,7 @@ const Task = ({ task, idx }: Props) => {
           <Checkbox />
           <div className="ml-4">{task.title}</div>
         </div>
-        <div className="text-muted ml-8 mt-2 text-sm">
+        <div className="text-muted-foreground ml-8 mt-2 text-sm">
           {task.description || "No description"}
         </div>
       </div>
@@ -27,14 +26,17 @@ const Task = ({ task, idx }: Props) => {
           <MoreHorizontal className="h-4 w-4" />
         </div>
         <div className="flex gap-2">
-          {task.tags?.map((tag: any) => {
+          {task.tags?.map((tag: any, idx: number) => {
             return (
-              <Badge
-                key={tag.id}
-                className={`bg-${tag.color}-100 text-${tag.color}-600`}
+              <div
+                key={`${tag.id}-${idx}`}
+                className="text-xs p-1 rounded-md font-bold text-white"
+                style={{
+                  backgroundColor: `${tag.color}`,
+                }}
               >
                 {tag.name}
-              </Badge>
+              </div>
             );
           })}
         </div>
