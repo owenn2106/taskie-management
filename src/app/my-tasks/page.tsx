@@ -13,7 +13,11 @@ const MyTasks = () => {
   const { data: tasks, isLoading: isTasksLoading } = useQuery({
     queryKey: ["tasks"],
     queryFn: async () => {
-      const response = await axios.get("/api/tasks");
+      const response = await axios.get("/api/tasks", {
+        params: {
+          userId: "091471b3-c332-44fc-bd80-2bd938f69a3f", // TODO: replace with actual logged in user id
+        },
+      });
       return response.data;
     },
   });

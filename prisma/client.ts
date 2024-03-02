@@ -21,5 +21,5 @@ if (process.env.NODE_ENV === "development") {
 export default db;
 
 // NOTE:
-// - This is for the purpose of making Prisma Client a singleton
+// - This is for the purpose of making Prisma Client only initialized once
 // (only one instance of Prisma Client is created and shared across the app)

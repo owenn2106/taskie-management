@@ -1,13 +1,16 @@
 import db from "@/../prisma/client";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const searchParams = req.nextUrl.searchParams;
+  const userId = searchParams.get("userId");
+
   try {
     const workspaces = await db.workspace.findMany({
       where: {
         users: {
           some: {
-            id: "091471b3-c332-44fc-bd80-2bd938f69a3f", // Fetch the workspaces of the currently logged in user
+            id: userId ? userId : undefined,
           },
         },
       },

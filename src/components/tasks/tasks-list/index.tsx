@@ -1,3 +1,4 @@
+import React from "react";
 import Task from "@/components/tasks/task";
 import { Separator } from "@/components/ui/separator";
 import { Task as TaskType } from "@prisma/client";
@@ -10,10 +11,10 @@ const TasksList = ({ tasks }: Props) => {
   return (
     <div>
       {tasks?.map((task: TaskType, idx: number) => (
-        <>
-          <Task key={task.id} task={task} idx={idx} />
+        <React.Fragment key={task.id}>
+          <Task task={task} idx={idx} />
           {idx !== tasks.length - 1 && <Separator className="mt-8" />}
-        </>
+        </React.Fragment>
       ))}
     </div>
   );
