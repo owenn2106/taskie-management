@@ -5,15 +5,26 @@ import AddTask from "@/components/tasks/add-task";
 import TasksList from "@/components/tasks/tasks-list";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { getWorkspaces } from "@/services/workspaces";
+import { Category, Workspace } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { MessageSquare, MoreHorizontal, UserPlus } from "lucide-react";
+import {
+  ChevronRight,
+  MessageSquare,
+  MoreHorizontal,
+  UserPlus,
+} from "lucide-react";
 
-const Page = ({ params }: { params: { id: string } }) => {
+const Page = ({
+  params,
+}: {
+  params: { workspaceId: string; categoryId: string };
+}) => {
   const { data: tasks, isLoading: isTasksLoading } = useQuery({
-    queryKey: [`tasks-${params.id}`],
+    queryKey: [`tasks-${params.categoryId}`],
     queryFn: async () => {
-      const response = await axios.get(`/api/workspaces/${params.id}`, {
+      const response = await axios.get(`/api/workspaces/${params.categoryId}`, {
         params: {
           userId: "091471b3-c332-44fc-bd80-2bd938f69a3f", // TODO: replace with actual logged in user id
         },
@@ -21,6 +32,18 @@ const Page = ({ params }: { params: { id: string } }) => {
       return response.data;
     },
   });
+
+  const { data: workspaces } = useQuery({
+    queryKey: [`workspaces`],
+    queryFn: getWorkspaces,
+  });
+
+  const currentWorkspace = workspaces?.find(
+    (w: Workspace) => w.id === params.workspaceId,
+  );
+  const currentCategory = currentWorkspace?.categories.find(
+    (c: Category) => c.id === params.categoryId,
+  );
 
   const renderTasksList = () => {
     if (isTasksLoading) {
@@ -45,7 +68,13 @@ const Page = ({ params }: { params: { id: string } }) => {
   return (
     <div>
       <div className="flex items-center justify-between">
-        <div className="font-bold text-2xl">My Tasks</div>
+        <div className="flex items-center gap-2">
+          <div className="text-muted-foreground">
+            {currentWorkspace?.name || "Project"}
+          </div>
+          <ChevronRight className="w-4 h-4" />
+          <div className="">{currentCategory?.name || "Category"}</div>
+        </div>
         <div className="flex items-center gap-2">
           <div className="w-10 h-10 flex items-center justify-center hover:bg-primary/15 rounded-sm cursor-pointer">
             <MessageSquare className="h-6 w-6" />

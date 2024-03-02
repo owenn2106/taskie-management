@@ -8,21 +8,17 @@ import {
 } from "@/components/ui/accordion";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import Loader from "@/components/loader";
 import { Button } from "@/components/ui/button";
+import { useParams } from "next/navigation";
+import { getWorkspaces } from "@/services/workspaces";
 
 const Content = () => {
+  const { categoryId } = useParams();
+
   const { data: workspaces, isLoading: isWorkspacesLoading } = useQuery({
     queryKey: ["workspaces"],
-    queryFn: async () => {
-      const response = await axios.get("/api/workspaces", {
-        params: {
-          userId: "091471b3-c332-44fc-bd80-2bd938f69a3f", // TODO: replace with actual logged in user id
-        },
-      });
-      return response.data;
-    },
+    queryFn: getWorkspaces,
   });
 
   const getWorkspacesList = () => {
@@ -47,15 +43,13 @@ const Content = () => {
 
     return (
       <>
-        {workspaces.map((workspace: any) => {
-          return (
-            <Accordion
-              key={workspace.id}
-              type="single"
-              collapsible
-              className="w-full"
-            >
-              <AccordionItem value="item-1">
+        <Accordion type="multiple" className="w-full">
+          {workspaces.map((workspace: any) => {
+            return (
+              <AccordionItem
+                key={workspace.id}
+                value={`accordion-${workspace.id}`}
+              >
                 <AccordionTrigger>{workspace.name}</AccordionTrigger>
                 <AccordionContent>
                   {workspace.categories?.length
@@ -63,12 +57,12 @@ const Content = () => {
                         return (
                           <Link
                             key={category.id}
-                            href={`/workspaces/${category.id}`}
+                            href={`/workspaces/${workspace.id}/category/${category.id}`}
                           >
                             <Button
                               key={category.id}
-                              variant="ghost"
-                              className="w-full justify-start cursor-pointer p-3 bg-transparent"
+                              variant={`${categoryId === category.id ? "default" : "ghost"}`}
+                              className="w-full justify-start cursor-pointer p-3 mb-2"
                             >
                               {category.name}
                             </Button>
@@ -78,9 +72,9 @@ const Content = () => {
                     : `No category found for ${workspace.name}`}
                 </AccordionContent>
               </AccordionItem>
-            </Accordion>
-          );
-        })}
+            );
+          })}
+        </Accordion>
       </>
     );
   };

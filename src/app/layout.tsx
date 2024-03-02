@@ -6,6 +6,7 @@ import Navbar from "@/components/navbar";
 import Sidebar from "@/components/sidebar";
 import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,6 +31,8 @@ export default function RootLayout({
               {children}
             </Card>
           </div>
+
+          <Toaster />
         </Providers>
       </body>
     </html>
